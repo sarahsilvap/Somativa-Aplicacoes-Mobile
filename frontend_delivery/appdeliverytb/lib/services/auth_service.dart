@@ -1,22 +1,21 @@
-import 'package:mobile_app/services/api_service.dart';
+import 'dart:convert';
+import 'package:http/http.dart';
+import '../services/api_service.dart';
 
 class AuthService {
   static Future<bool> login(String username, String password) async {
-    final resp = await ApiService.post("/login/", {
-      "username": username,
-      "password": password,
-    });
+    final Response resp = await ApiService.post(
+      "/auth/login/",
+      {
+        "username": username,
+        "password": password,
+      },
+    );
 
-    return resp["status"] == "ok";
-  }
+    if (resp.statusCode == 200 || resp.statusCode == 201) {
+      return true;
+    }
 
-  static Future<bool> register(String username, String email, String password) async {
-    final resp = await ApiService.post("/register/", {
-      "username": username,
-      "email": email,
-      "password": password,
-    });
-
-    return resp["status"] == "ok";
+    return false;
   }
 }
