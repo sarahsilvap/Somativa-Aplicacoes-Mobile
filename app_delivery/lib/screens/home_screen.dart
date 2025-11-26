@@ -77,8 +77,8 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.account_circle),
             itemBuilder: (context) => <PopupMenuEntry<String>>[
               PopupMenuItem<String>(
-                child: Text('Hello, ${authProvider.username}!'),
                 enabled: false,
+                child: Text('Hello, ${authProvider.username}!'),
               ),
               const PopupMenuDivider(),
               PopupMenuItem<String>(
@@ -106,7 +106,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                      const Icon(Icons.error_outline,
+                          size: 64, color: Colors.red),
                       const SizedBox(height: 16),
                       Text('Error: $_error'),
                       const SizedBox(height: 16),

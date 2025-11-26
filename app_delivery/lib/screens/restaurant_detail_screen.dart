@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import '../services/api_service.dart';
 import '../models/restaurant.dart';
 import '../models/product.dart';
@@ -64,7 +63,8 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.error_outline, size: 64, color: Colors.red),
+                      const Icon(Icons.error_outline,
+                          size: 64, color: Colors.red),
                       const SizedBox(height: 16),
                       Text('Error: $_error'),
                       const SizedBox(height: 16),
@@ -88,7 +88,10 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                               children: [
                                 Text(
                                   _restaurant!.name,
-                                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall
+                                      ?.copyWith(
                                         fontWeight: FontWeight.bold,
                                       ),
                                 ),
@@ -105,7 +108,10 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                                 const SizedBox(height: 24),
                                 Text(
                                   'Menu',
-                                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.copyWith(
                                         fontWeight: FontWeight.bold,
                                       ),
                                 ),
@@ -125,7 +131,8 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                             : SliverList(
                                 delegate: SliverChildBuilderDelegate(
                                   (context, index) {
-                                    final product = _restaurant!.products[index];
+                                    final product =
+                                        _restaurant!.products[index];
                                     return _buildProductItem(product);
                                   },
                                   childCount: _restaurant!.products.length,
