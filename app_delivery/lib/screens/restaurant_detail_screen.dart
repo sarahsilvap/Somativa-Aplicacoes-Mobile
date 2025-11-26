@@ -5,6 +5,7 @@ import '../services/api_service.dart';
 import '../models/restaurant.dart';
 import '../models/product.dart';
 import '../providers/cart_provider.dart';
+import '../widgets/network_image_widget.dart';
 
 class RestaurantDetailScreen extends StatefulWidget {
   final int restaurantId;
@@ -141,14 +142,10 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         background: _restaurant!.image.isNotEmpty
-            ? CachedNetworkImage(
+            ? NetworkImageWidget(
                 imageUrl: _restaurant!.image,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
-                  color: Colors.grey[300],
-                  child: const Center(child: CircularProgressIndicator()),
-                ),
-                errorWidget: (context, url, error) => Container(
+                errorWidget: Container(
                   color: Colors.grey[300],
                   child: const Icon(Icons.restaurant, size: 64),
                 ),
@@ -174,17 +171,17 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
             if (product.image.isNotEmpty)
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: CachedNetworkImage(
+                child: NetworkImageWidget(
                   imageUrl: product.image,
                   width: 80,
                   height: 80,
                   fit: BoxFit.cover,
-                  placeholder: (context, url) => Container(
+                  placeholder: Container(
                     width: 80,
                     height: 80,
                     color: Colors.grey[300],
                   ),
-                  errorWidget: (context, url, error) => Container(
+                  errorWidget: Container(
                     width: 80,
                     height: 80,
                     color: Colors.grey[300],

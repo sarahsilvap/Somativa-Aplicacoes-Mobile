@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:badges/badges.dart' as badges;
 import '../providers/auth_provider.dart';
 import '../providers/cart_provider.dart';
 import '../services/api_service.dart';
 import '../models/category.dart';
 import '../models/restaurant.dart';
+import '../widgets/network_image_widget.dart'; // Import new NetworkImageWidget for better CORS handling
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -240,17 +240,17 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (restaurant.image.isNotEmpty)
-              CachedNetworkImage(
+              NetworkImageWidget(
                 imageUrl: restaurant.image,
                 height: 180,
                 width: double.infinity,
                 fit: BoxFit.cover,
-                placeholder: (context, url) => Container(
+                placeholder: Container(
                   height: 180,
                   color: Colors.grey[300],
                   child: const Center(child: CircularProgressIndicator()),
                 ),
-                errorWidget: (context, url, error) => Container(
+                errorWidget: Container(
                   height: 180,
                   color: Colors.grey[300],
                   child: const Icon(Icons.restaurant, size: 64),
