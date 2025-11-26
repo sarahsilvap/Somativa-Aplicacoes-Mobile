@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Category(models.Model):
     name = models.CharField(max_length=120)
-    icon = models.CharField(max_length=120, blank=True)
+    icon = models.CharField(max_length=300, blank=True)
 
     def __str__(self):
         return self.name
@@ -11,7 +11,7 @@ class Category(models.Model):
 class Restaurant(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    image = models.CharField(max_length=300, blank=True)
+    image = models.CharField(max_length=600, blank=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
