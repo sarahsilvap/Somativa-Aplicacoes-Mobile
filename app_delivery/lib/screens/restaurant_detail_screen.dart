@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import '../services/api_service.dart';
 import '../models/restaurant.dart';
 import '../models/product.dart';
@@ -66,17 +67,17 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                       const Icon(Icons.error_outline,
                           size: 64, color: Colors.red),
                       const SizedBox(height: 16),
-                      Text('Error: $_error'),
+                      Text('Erro: $_error'),
                       const SizedBox(height: 16),
                       FilledButton(
                         onPressed: _loadRestaurant,
-                        child: const Text('Retry'),
+                        child: const Text('Tentar Novamente'),
                       ),
                     ],
                   ),
                 )
               : _restaurant == null
-                  ? const Center(child: Text('Restaurant not found'))
+                  ? const Center(child: Text('Restaurante não encontrado'))
                   : CustomScrollView(
                       slivers: [
                         _buildAppBar(),
@@ -107,7 +108,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                                 ],
                                 const SizedBox(height: 24),
                                 Text(
-                                  'Menu',
+                                  'Cardápio',
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge
@@ -124,7 +125,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                                 child: Padding(
                                   padding: EdgeInsets.all(32),
                                   child: Center(
-                                    child: Text('No products available'),
+                                    child: Text('Nenhum produto disponível'),
                                   ),
                                 ),
                               )
@@ -235,7 +236,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '\$${product.price.toStringAsFixed(2)}',
+                        'R\$ ${product.price.toStringAsFixed(2)}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
@@ -247,10 +248,11 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                           cartProvider.addItem(product);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text('${product.name} added to cart'),
+                              content: Text(
+                                  '${product.name} adicionado ao carrinho'),
                               duration: const Duration(seconds: 1),
                               action: SnackBarAction(
-                                label: 'View Cart',
+                                label: 'Ver Carrinho',
                                 onPressed: () {
                                   Navigator.of(context).pushNamed('/cart');
                                 },
@@ -259,7 +261,7 @@ class _RestaurantDetailScreenState extends State<RestaurantDetailScreen> {
                           );
                         },
                         icon: const Icon(Icons.add_shopping_cart, size: 16),
-                        label: const Text('Add'),
+                        label: const Text('Adicionar'),
                         style: FilledButton.styleFrom(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 12,

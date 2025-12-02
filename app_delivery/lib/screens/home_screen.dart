@@ -6,7 +6,7 @@ import '../providers/cart_provider.dart';
 import '../services/api_service.dart';
 import '../models/category.dart';
 import '../models/restaurant.dart';
-import '../widgets/network_image_widget.dart'; // Import new NetworkImageWidget for better CORS handling
+import '../widgets/network_image_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -57,7 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Delivery App'),
+        automaticallyImplyLeading: false,
+        title: const Text('App de Delivery'),
         actions: [
           badges.Badge(
             position: badges.BadgePosition.topEnd(top: 0, end: 3),
@@ -78,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
             itemBuilder: (context) => <PopupMenuEntry<String>>[
               PopupMenuItem<String>(
                 enabled: false,
-                child: Text('Hello, ${authProvider.username}!'),
+                child: Text('Olá, ${authProvider.username}!'),
               ),
               const PopupMenuDivider(),
               PopupMenuItem<String>(
@@ -86,7 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Icon(Icons.logout, size: 20),
                     SizedBox(width: 8),
-                    Text('Logout'),
+                    Text('Sair'),
                   ],
                 ),
                 onTap: () async {
@@ -109,11 +110,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       const Icon(Icons.error_outline,
                           size: 64, color: Colors.red),
                       const SizedBox(height: 16),
-                      Text('Error: $_error'),
+                      Text('Erro: $_error'),
                       const SizedBox(height: 16),
                       FilledButton(
                         onPressed: _loadData,
-                        child: const Text('Retry'),
+                        child: const Text('Tentar Novamente'),
                       ),
                     ],
                   ),
@@ -141,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Padding(
           padding: const EdgeInsets.all(16),
           child: Text(
-            'Categories',
+            'Categorias',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -198,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Padding(
           padding: const EdgeInsets.all(16),
           child: Text(
-            'Restaurants',
+            'Restaurantes',
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -208,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const Padding(
             padding: EdgeInsets.all(32),
             child: Center(
-              child: Text('No restaurants available'),
+              child: Text('Nenhum restaurante disponível'),
             ),
           )
         else
@@ -219,7 +220,10 @@ class _HomeScreenState extends State<HomeScreen> {
             itemCount: _restaurants.length,
             itemBuilder: (context, index) {
               final restaurant = _restaurants[index];
-              return _buildRestaurantCard(restaurant);
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: _buildRestaurantCard(restaurant),
+              );
             },
           ),
       ],
@@ -228,7 +232,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildRestaurantCard(Restaurant restaurant) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 16),
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () {
@@ -240,6 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // 🔥 IMAGEM COM ALTURA FIXA, CARD CRESCE DINAMICAMENTE
             if (restaurant.image.isNotEmpty)
               NetworkImageWidget(
                 imageUrl: restaurant.image,
@@ -254,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 errorWidget: Container(
                   height: 180,
                   color: Colors.grey[300],
-                  child: const Icon(Icons.restaurant, size: 64),
+                  child: const Icon(Icons.restaurant, size: 48),
                 ),
               )
             else
@@ -262,9 +266,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 180,
                 color: Colors.grey[300],
                 child: const Center(
-                  child: Icon(Icons.restaurant, size: 64),
+                  child: Icon(Icons.restaurant, size: 48),
                 ),
               ),
+
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -272,20 +277,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     restaurant.name,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                   ),
                   if (restaurant.description.isNotEmpty) ...[
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 8),
                     Text(
                       restaurant.description,
                       style: TextStyle(
                         color: Colors.grey[600],
                         fontSize: 14,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                   const SizedBox(height: 8),
@@ -293,15 +296,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Icon(
                         Icons.delivery_dining,
-                        size: 16,
+                        size: 18,
                         color: Theme.of(context).colorScheme.primary,
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Free delivery',
-                        style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
-                          fontSize: 12,
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          'Entrega grátis para pedidos acima de R\$100',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],

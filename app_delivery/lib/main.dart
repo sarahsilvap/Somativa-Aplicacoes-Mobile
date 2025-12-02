@@ -53,7 +53,8 @@ class MyApp extends StatelessWidget {
           if (settings.name == '/restaurant') {
             final restaurantId = settings.arguments as int;
             return MaterialPageRoute(
-              builder: (context) => RestaurantDetailScreen(restaurantId: restaurantId),
+              builder: (context) =>
+                  RestaurantDetailScreen(restaurantId: restaurantId),
             );
           }
           return null;

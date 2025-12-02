@@ -39,12 +39,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
 
       if (!mounted) return;
-      Navigator.of(context).pushReplacementNamed('/home');
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content:
+              Text('Cadastro realizado com sucesso! Por favor, faça login.'),
+          backgroundColor: Colors.green,
+        ),
+      );
+      Navigator.of(context).pushReplacementNamed('/login');
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Registration failed: ${e.toString()}'),
+          content: Text('Falha no cadastro: ${e.toString()}'),
           backgroundColor: Colors.red,
         ),
       );
@@ -75,7 +83,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Create Account',
+                    'Criar Conta',
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -83,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Register to get started',
+                    'Cadastre-se para começar',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Colors.grey[600],
                         ),
@@ -93,7 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextFormField(
                     controller: _usernameController,
                     decoration: InputDecoration(
-                      labelText: 'Username',
+                      labelText: 'Nome de Usuário',
                       prefixIcon: const Icon(Icons.person_outline),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -101,10 +109,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter username';
+                        return 'Por favor, insira o nome de usuário';
                       }
                       if (value.length < 3) {
-                        return 'Username must be at least 3 characters';
+                        return 'Nome de usuário deve ter pelo menos 3 caracteres';
                       }
                       return null;
                     },
@@ -114,11 +122,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: _passwordController,
                     obscureText: _obscurePassword,
                     decoration: InputDecoration(
-                      labelText: 'Password',
+                      labelText: 'Senha',
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                          _obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                         ),
                         onPressed: () {
                           setState(() => _obscurePassword = !_obscurePassword);
@@ -130,10 +140,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter password';
+                        return 'Por favor, insira a senha';
                       }
                       if (value.length < 6) {
-                        return 'Password must be at least 6 characters';
+                        return 'Senha deve ter pelo menos 6 caracteres';
                       }
                       return null;
                     },
@@ -143,14 +153,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: _confirmPasswordController,
                     obscureText: _obscureConfirmPassword,
                     decoration: InputDecoration(
-                      labelText: 'Confirm Password',
+                      labelText: 'Confirmar Senha',
                       prefixIcon: const Icon(Icons.lock_outline),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscureConfirmPassword ? Icons.visibility_off : Icons.visibility,
+                          _obscureConfirmPassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
                         ),
                         onPressed: () {
-                          setState(() => _obscureConfirmPassword = !_obscureConfirmPassword);
+                          setState(() => _obscureConfirmPassword =
+                              !_obscureConfirmPassword);
                         },
                       ),
                       border: OutlineInputBorder(
@@ -159,10 +172,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please confirm password';
+                        return 'Por favor, confirme a senha';
                       }
                       if (value != _passwordController.text) {
-                        return 'Passwords do not match';
+                        return 'As senhas não coincidem';
                       }
                       return null;
                     },
@@ -186,7 +199,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           )
                         : const Text(
-                            'Register',
+                            'Cadastrar',
                             style: TextStyle(fontSize: 16),
                           ),
                   ),
@@ -195,14 +208,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Already have an account? ",
+                        "Já tem uma conta? ",
                         style: TextStyle(color: Colors.grey[600]),
                       ),
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).pushReplacementNamed('/login');
                         },
-                        child: const Text('Login'),
+                        child: const Text('Entrar'),
                       ),
                     ],
                   ),

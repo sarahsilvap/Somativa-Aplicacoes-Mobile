@@ -14,7 +14,7 @@ class CartScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cart'),
+        title: const Text('Carrinho'),
         actions: [
           if (items.isNotEmpty)
             TextButton(
@@ -22,25 +22,26 @@ class CartScreen extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: const Text('Clear Cart'),
-                    content: const Text('Are you sure you want to clear all items?'),
+                    title: const Text('Limpar Carrinho'),
+                    content: const Text(
+                        'Tem certeza que deseja remover todos os itens?'),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(),
-                        child: const Text('Cancel'),
+                        child: const Text('Cancelar'),
                       ),
                       TextButton(
                         onPressed: () {
                           cartProvider.clear();
                           Navigator.of(context).pop();
                         },
-                        child: const Text('Clear'),
+                        child: const Text('Limpar'),
                       ),
                     ],
                   ),
                 );
               },
-              child: const Text('Clear All'),
+              child: const Text('Limpar Tudo'),
             ),
         ],
       ),
@@ -56,7 +57,7 @@ class CartScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    'Your cart is empty',
+                    'Seu carrinho está vazio',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           color: Colors.grey[600],
                         ),
@@ -66,7 +67,7 @@ class CartScreen extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pushReplacementNamed('/home');
                     },
-                    child: const Text('Start Shopping'),
+                    child: const Text('Começar a Comprar'),
                   ),
                 ],
               ),
@@ -89,7 +90,8 @@ class CartScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCartItem(BuildContext context, CartItem item, CartProvider cartProvider) {
+  Widget _buildCartItem(
+      BuildContext context, CartItem item, CartProvider cartProvider) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
@@ -142,7 +144,7 @@ class CartScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '\$${item.product.price.toStringAsFixed(2)}',
+                    'R\$${item.product.price.toStringAsFixed(2)}',
                     style: TextStyle(
                       color: Colors.grey[600],
                       fontSize: 14,
@@ -171,7 +173,8 @@ class CartScreen extends StatelessWidget {
                               },
                             ),
                             Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12),
                               child: Text(
                                 item.quantity.toString(),
                                 style: const TextStyle(
@@ -198,7 +201,7 @@ class CartScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
                           Text(
-                            '\$${item.total.toStringAsFixed(2)}',
+                            'R\$${item.total.toStringAsFixed(2)}',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
@@ -218,7 +221,7 @@ class CartScreen extends StatelessWidget {
                 cartProvider.removeItem(item.product.id);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('${item.product.name} removed from cart'),
+                    content: Text('${item.product.name} removido do carrinho'),
                     duration: const Duration(seconds: 1),
                   ),
                 );
@@ -258,7 +261,7 @@ class CartScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '\$${cartProvider.totalAmount.toStringAsFixed(2)}',
+                  'R\$ ${cartProvider.totalAmount.toStringAsFixed(2)}',
                   style: const TextStyle(
                     fontSize: 14,
                   ),
@@ -270,14 +273,14 @@ class CartScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Delivery Fee',
+                  'Taxa de Entrega',
                   style: TextStyle(
                     color: Colors.grey[600],
                     fontSize: 14,
                   ),
                 ),
                 Text(
-                  'Free',
+                  'A calcular',
                   style: TextStyle(
                     fontSize: 14,
                     color: Theme.of(context).colorScheme.primary,
@@ -297,7 +300,7 @@ class CartScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '\$${cartProvider.totalAmount.toStringAsFixed(2)}',
+                  'R\$ ${cartProvider.totalAmount.toStringAsFixed(2)}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -317,7 +320,7 @@ class CartScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
                 child: const Text(
-                  'Proceed to Checkout',
+                  'Finalizar Pedido',
                   style: TextStyle(fontSize: 16),
                 ),
               ),
